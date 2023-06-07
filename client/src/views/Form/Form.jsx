@@ -50,14 +50,30 @@ const Form = () => {
 
     const handleCountries = (event) => {
         const selectedCountry = event.target.value;
-        const updatedCountries = event.target.checked
-            ? [...form.countries, selectedCountry]
-            : form.countries.filter(country => country !== selectedCountry);
+        const isCountrySelected = form.countries.includes(selectedCountry);
+        if (isCountrySelected) {
+            const updatedCountries = form.countries.filter((country) => country !== selectedCountry);
         setForm({
             ...form,
             countries: updatedCountries,
         });
         setErrors(validationForm({ ...form, countries: updatedCountries }));
+        } else {
+        setForm({
+            ...form,
+            countries: [...form.countries, selectedCountry],
+        });
+        setErrors(validationForm({ ...form, countries: [...form.countries, selectedCountry] }));
+        }
+    };
+
+    const handleDelete = (event) => {
+        event.preventDefault();
+        let listCountries = form.countries;
+        const index = event.target.name;
+        listCountries.splice(index, 1);
+        setForm({ ...form, countries: listCountries });
+        setErrors(validationForm({ ...form, countries: listCountries}))
     };
 
     const handleSubmit = () => {
@@ -97,15 +113,23 @@ const Form = () => {
                 </div>
                 <div>
                     <label htmlFor='countries' className={stylesForm.labels}>Countries</label>
-                    <div className={stylesForm.divCountries}>
+                    <select multiple value={form.countries} onChange={handleCountries} className={stylesForm.selectCountries}>
                         {countries.map((event) => (
-                            <div key={event.id}>
-                                <input id={event.id} type="checkbox" value={event.name} name={event.name} onChange={handleCountries} disabled={form.countries.includes(event.target)? true : false}/>
-                                <label htmlFor={event.id} className={stylesForm.labelCountries}>{event.name}</label>
-                            </div>
+                            <option key={event.id} value={event.name}>
+                                <img src={event.flag} alt={event.flag} className={stylesForm.imgCountries}/>
+                                {event.name}
+                            </option>
                         ))}
-                        {errors.countries && <span className={stylesForm.spans}>{errors.countries}</span>}
+                    </select>
+                    {errors.countries && <span className={stylesForm.spans}>{errors.countries}</span>}
+                </div>
+                <div>
+                {form.countries?.map((element, index) => (
+                    <div key={index} className={stylesForm.divCount}>
+                        <p className={stylesForm.pCount}>{form.countries[index]}</p>
+                        <button className={stylesForm.btnCount} name={index} onClick={handleDelete}>X</button>
                     </div>
+                ))}
                 </div>
                 <button className={stylesForm.btnSubmit} type='submit' disabled={isFormEmpty || Object.keys(errors).length}>Add activity</button>
             </form>
