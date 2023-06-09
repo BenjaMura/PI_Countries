@@ -4,7 +4,7 @@ const validationForm = (form) => {
     if (form.name.length < 3 || form.name.length > 140) {
         errors.name = "The name of the activity must have between 3 and 140 characters";
     }
-    if (/[$%|<>#@]/g.test(form.name)) {
+    if (/[0-9$%|<>#@]/g.test(form.name)) {
         errors.name = "The name can't have special characters";
     }
     if (!form.name) {

@@ -50,30 +50,14 @@ const Form = () => {
 
     const handleCountries = (event) => {
         const selectedCountry = event.target.value;
-        const isCountrySelected = form.countries.includes(selectedCountry);
-        if (isCountrySelected) {
-            const updatedCountries = form.countries.filter((country) => country !== selectedCountry);
+        const updatedCountries = event.target.checked
+            ? [...form.countries, selectedCountry]
+            : form.countries.filter(country => country !== selectedCountry);
         setForm({
             ...form,
             countries: updatedCountries,
         });
         setErrors(validationForm({ ...form, countries: updatedCountries }));
-        } else {
-        setForm({
-            ...form,
-            countries: [...form.countries, selectedCountry],
-        });
-        setErrors(validationForm({ ...form, countries: [...form.countries, selectedCountry] }));
-        }
-    };
-
-    const handleDelete = (event) => {
-        event.preventDefault();
-        let listCountries = form.countries;
-        const index = event.target.name;
-        listCountries.splice(index, 1);
-        setForm({ ...form, countries: listCountries });
-        setErrors(validationForm({ ...form, countries: listCountries}))
     };
 
     const handleSubmit = () => {
@@ -88,48 +72,41 @@ const Form = () => {
             ) : (
             <div className={stylesForm.divForm}>
             <form onSubmit={handleSubmit} className={stylesForm.form}>
-                <div>
-                    <label htmlFor='name' className={stylesForm.labels}>Name</label>
-                    <input type='text' name='name' className={stylesForm.inputs} placeholder="Type activity's name..." value={form.name} onChange={handleChange}/>
+                <div className={stylesForm.divAct}>
+                    <label htmlFor='name' className={stylesForm.labelAct}>Activity</label>
+                    <input type='text' name='name' className={stylesForm.inputAct} placeholder="Type activity's name or short description..." value={form.name} onChange={handleChange}/>
                     {errors.name && <span className={stylesForm.spans}>{errors.name}</span>}
                 </div>
-                <div>
-                    <label htmlFor='difficulty' className={stylesForm.labels}>Difficulty</label>
-                    <input type='text' name='difficulty' className={stylesForm.inputs} placeholder="Type activity's difficulty... (Max: 5 - Min: 1)" value={form.difficulty} onChange={handleChange}/>
+                <div className={stylesForm.divDif}>
+                    <label htmlFor='difficulty' className={stylesForm.labelDif}>Difficulty (min: 1 - max: 5)</label>
+                    <input type='text' name='difficulty' className={stylesForm.inputDif} placeholder="..." value={form.difficulty} onChange={handleChange}/>
                     {errors.difficulty && <span className={stylesForm.spans}>{errors.difficulty}</span>}
                 </div>
-                <div>
-                    <label htmlFor='duration' className={stylesForm.labels}>Duration</label>
-                    <input type='text' name='duration' className={stylesForm.inputs} placeholder="Type activity's duration..." value={form.duration} onChange={handleChange}/>
+                <div className={stylesForm.divDur}>
+                    <label htmlFor='duration' className={stylesForm.labelDur}>Duration (hours)</label>
+                    <input type='text' name='duration' className={stylesForm.inputDur} placeholder="..." value={form.duration} onChange={handleChange}/>
                     {errors.duration && <span className={stylesForm.spans}>{errors.duration}</span>}
                 </div>
-                <div>
-                    <label htmlFor='season' className={stylesForm.labels}>Season</label>
-                        <label><input id="Summer" type="radio" name="season" value="Summer" onChange={handleChange} className={stylesForm.inputs}/> Summer</label>
-                        <label><input id="Autumn" type="radio" name="season" value="Autumn" onChange={handleChange} className={stylesForm.inputs}/> Autumn</label>
-                        <label><input id="Winter" type="radio" name="season" value="Winter" onChange={handleChange} className={stylesForm.inputs}/> Winter</label>
-                        <label><input id="Spring" type="radio" name="season" value="Spring" onChange={handleChange} className={stylesForm.inputs}/> Spring</label>
+                <div className={stylesForm.divSeas}>
+                    <label htmlFor='season' className={stylesForm.labelSeas}>Recommended season for the activity</label>
+                    <label className={stylesForm.labelsSeas}><input id="Summer" type="radio" name="season" value="Summer" onChange={handleChange} className={stylesForm.inputSeas}/> Summer ☀️</label>
+                    <label className={stylesForm.labelsSeas}><input id="Autumn" type="radio" name="season" value="Autumn" onChange={handleChange} className={stylesForm.inputSeas}/> Autumn 🍂</label>
+                    <label className={stylesForm.labelsSeas}><input id="Winter" type="radio" name="season" value="Winter" onChange={handleChange} className={stylesForm.inputSeas}/> Winter ❄️</label>
+                    <label className={stylesForm.labelsSeas}><input id="Spring" type="radio" name="season" value="Spring" onChange={handleChange} className={stylesForm.inputSeas}/> Spring 🌸</label>
                     {errors.season && <span className={stylesForm.spans}>{errors.season}</span>}
                 </div>
-                <div>
-                    <label htmlFor='countries' className={stylesForm.labels}>Countries</label>
-                    <select multiple value={form.countries} onChange={handleCountries} className={stylesForm.selectCountries}>
-                        {countries.map((event) => (
-                            <option key={event.id} value={event.name}>
+                <div className={stylesForm.divCountries}>
+                    <label htmlFor='countries' className={stylesForm.labelCountries}>Countries associated with the activity</label>
+                    <div className={stylesForm.divCounts}>
+                        {countries.sort((a, b) => a.name > b.name).map((event) => (
+                            <div key={event.id}>
+                                <input id={event.id} value={event.name} name={event.name} type="checkbox" onChange={handleCountries} className={stylesForm.inputImg}/>
                                 <img src={event.flag} alt={event.flag} className={stylesForm.imgCountries}/>
-                                {event.name}
-                            </option>
+                                <label htmlFor={event.id} className={stylesForm.labelsCounts}> {event.name}</label>    
+                            </div>
                         ))}
-                    </select>
-                    {errors.countries && <span className={stylesForm.spans}>{errors.countries}</span>}
-                </div>
-                <div>
-                {form.countries?.map((element, index) => (
-                    <div key={index} className={stylesForm.divCount}>
-                        <p className={stylesForm.pCount}>{form.countries[index]}</p>
-                        <button className={stylesForm.btnCount} name={index} onClick={handleDelete}>X</button>
                     </div>
-                ))}
+                    {errors.countries && <span className={stylesForm.spans}>{errors.countries}</span>}
                 </div>
                 <button className={stylesForm.btnSubmit} type='submit' disabled={isFormEmpty || Object.keys(errors).length}>Add activity</button>
             </form>

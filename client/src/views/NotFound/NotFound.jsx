@@ -7,12 +7,12 @@ const NotFound = () => {
             <h1 className={stylesNotFound.h1}>
                 404
             </h1>
-            <p className={stylesNotFound.p}>
-                Wrong way
-            </p>
-            <Link to="/home">
+            <h2 className={stylesNotFound.h2}>
+                Wrong way !
+            </h2>
+            <Link to="/home" className={stylesNotFound.link}>
                 <button className={stylesNotFound.btn}>
-                    Back Home
+                    ⬅️ Back
                 </button>
             </Link>
         </div>         

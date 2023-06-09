@@ -52,17 +52,21 @@ const Pagination = ({pages}) => {
     return (
         <div className={stylesPagination.divPag}>
             {numPage > 1 && (
-                <div className={stylesPagination.divbtn}>
+                <div className={stylesPagination.divBtn}>
                     <button className={stylesPagination.btnPN} onClick={prev}>
                         ⬅️ Prev
                     </button>
                 </div>
             )}
-            {renderPrevPageNumbers()}
-            <h2 className={stylesPagination.h2}>{numPage}</h2>
-            {renderNextPageNumbers()}
+            <div className={stylesPagination.divBtn}>
+                {renderPrevPageNumbers()}
+            </div>
+            <h2 className={stylesPagination.h2}>{numPage} {pages !== 0 && `of ${pages}`}</h2>
+            <div className={stylesPagination.divBtn}>
+                {renderNextPageNumbers()}
+            </div>
             {numPage < pages && (
-                <div className={stylesPagination.div}>
+                <div className={stylesPagination.divBtn}>
                     <button className={stylesPagination.btnPN} onClick={next}>
                         Next ➡️
                     </button>
