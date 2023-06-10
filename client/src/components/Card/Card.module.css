@@ -13,7 +13,7 @@
 }
 
 .div:hover .h2, .div:hover .h3 {
-    text-shadow: 2px 2px 2px #ffffff83;
+    text-shadow: 2px 0px 10px #ffffff83;
     transition-delay: 0.1s;
 }
 
@@ -36,10 +36,13 @@
 
 .h2 {
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 4vh;
+    font-size: 2vw;
     padding: 0 0.2em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .h3 {
-    font-size: 3vh;
+    font-size: 1.5vw;
 }

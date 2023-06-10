@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postActivity, getCountries } from '../../redux/actions';
+import { getCountries, postActivity } from '../../redux/actions';
 import validationForm from '../../helpers/Validations/ValidationForm';
 import stylesForm from './Form.module.css';
 import Loading from '../../components/Loading/Loading';
@@ -18,15 +19,15 @@ const Form = () => {
     let [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
-    const { countries } = useSelector((state) => state);
+    const { countriesCopy } = useSelector((state) => state);
     
     useEffect(() => {
         setLoading(true);
         setTimeout(() => {
             setLoading(false)
         }, 500);
-        dispatch(getCountries());
-    }, [dispatch])
+        if (!countriesCopy.length) dispatch(getCountries())
+    }, [])
 
     const isFormEmpty = useMemo(() => {
         for (const key in form) {
@@ -64,7 +65,7 @@ const Form = () => {
         dispatch(postActivity(form));
         alert("Your activity has been added");
     };
-
+    console.log(form)
     return (
         <div className={stylesForm.div}>
             {loading ? (
@@ -98,7 +99,7 @@ const Form = () => {
                 <div className={stylesForm.divCountries}>
                     <label htmlFor='countries' className={stylesForm.labelCountries}>Countries associated with the activity</label>
                     <div className={stylesForm.divCounts}>
-                        {countries.sort((a, b) => a.name > b.name).map((event) => (
+                        {countriesCopy.sort((a, b) => a.name > b.name).map((event) => (
                             <div key={event.id}>
                                 <input id={event.id} value={event.name} name={event.name} type="checkbox" onChange={handleCountries} className={stylesForm.inputImg}/>
                                 <img src={event.flag} alt={event.flag} className={stylesForm.imgCountries}/>

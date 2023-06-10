@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
         },
       },
       duration: {
-        type: DataTypes.TIME,
+        type: DataTypes.INTEGER,
         allowNull: true,
       },
       season: {

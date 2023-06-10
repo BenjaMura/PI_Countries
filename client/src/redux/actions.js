@@ -61,7 +61,7 @@ export const getActivities = () => {
             if (!data.length) throw Error();
             return dispatch({ type: GET_ACTIVITIES, payload: data})
         } catch (error) {
-            alert("Activities couldn't be loaded");           
+            alert("No activities available");           
         }
     };
 };

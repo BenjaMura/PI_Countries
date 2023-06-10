@@ -6,7 +6,6 @@ const matchDataAPI = async () => {
   const countries = getCountries.map((country) => {
     return {
       id: country.cca3,
-      created: false,
       name: country.name.common,
       flag: country.flags.png,
       continent: country.continents ? country.continents[0] : "-",

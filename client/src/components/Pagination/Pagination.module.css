@@ -23,6 +23,7 @@
 
 .btnNum {
     font-family: monospace;
+    width: 2vw;
     background-color: rgba(95, 158, 160, 0.889);
     border-radius: 0.5em;
     margin: 0 0.5em;
@@ -39,6 +40,7 @@
 
 .btnPN {
     margin: 0 0.5em;
+    width: 6vw;
     font-family: monospace;
     background-color: rgba(95, 158, 160, 0.918);
     border-radius: 0.5em;

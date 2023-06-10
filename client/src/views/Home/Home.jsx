@@ -9,16 +9,16 @@ import { getCountries, getActivities, sortByName, sortByPopulation, filterContin
 
 const Home = () => {
     const dispatch = useDispatch();
-    const { countries, loading, numPage, activities, countriesCopy } = useSelector((state) => state);
+    const { countries, loading, numPage, activities, countriesCopy, activitiesCopy } = useSelector((state) => state);
 
     useEffect(() => {
         if (!countriesCopy.length) dispatch(getCountries());
-        dispatch(getActivities());
+        if (!activitiesCopy.length) dispatch(getActivities());
     }, []);
 
     let first = (numPage - 1) * 10;
     let second = numPage * 10;
-    let pages = Math.floor(countries.length / 10);
+    let pages = Math.ceil(countries.length / 10);
     let currentCountries = countries.slice(first, second);
 
     const handleSortByName = (event) => {
@@ -92,7 +92,7 @@ const Home = () => {
             <div className={stylesHome.divCards}>
                 <CardsContainer currentCountries={currentCountries}/>
             </div>
-            {!countries.length && <div className={stylesHome.divNotFound}>Countries Not Found</div>}
+            {!countries.length && <div className={stylesHome.divNotFound}>Countries Not Found <button className={stylesHome.btnResetNF} onClick={handleReset}>Reset</button></div>}
             <div className={stylesHome.divPag}>
                 <Pagination pages={pages}/>
             </div>
