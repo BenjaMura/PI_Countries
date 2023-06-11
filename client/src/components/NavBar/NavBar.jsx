@@ -10,8 +10,8 @@ const NavBar = () => {
                 <button className={stylesNavBar.btn}>Home</button>
             </Link>
             {location.pathname === "/home" && <SearchBar />}
-            <Link to='/create' className={stylesNavBar.nav}>
-                <button className={stylesNavBar.btn}>New Activity</button>
+            <Link to='/activities' className={stylesNavBar.nav}>
+                <button className={stylesNavBar.btn}>Activities</button>
             </Link>
         </div>
     )

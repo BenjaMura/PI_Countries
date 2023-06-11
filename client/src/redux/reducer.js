@@ -1,11 +1,10 @@
-import { GET_COUNTRIES, LOADING, GET_COUNTRY_BY_NAME, NEXT_PAGE, PREV_PAGE, NUMBER_PAGE, GET_COUNTRY_BY_ID, CLEAN_DETAIL, POST_ACTIVITY, RESET, GET_ACTIVITIES, SORT_BY_NAME, SORT_BY_POPULATION, FILTER_CONTINENT, FILTER_ACTIVITY } from "./actionsTypes";
+import { GET_COUNTRIES, LOADING, GET_COUNTRY_BY_NAME, NEXT_PAGE, PREV_PAGE, NUMBER_PAGE, GET_COUNTRY_BY_ID, CLEAN_DETAIL, POST_ACTIVITY, RESET, GET_ACTIVITIES, SORT_BY_NAME, SORT_BY_POPULATION, FILTER_CONTINENT, FILTER_ACTIVITY, DELETE_ACTIVITY } from "./actionsTypes";
 
 const initialState = {
     countries: [],
     countriesCopy: [],
     countryDetail: {},
     activities: [],
-    activitiesCopy: [],
     loading: false,
     numPage: 1,
 };
@@ -23,7 +22,6 @@ const reducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 activities: payload,
-                activitiesCopy: payload,
             };
         case LOADING:
             return {
@@ -65,7 +63,7 @@ const reducer = (state = initialState, { type, payload }) => {
         case POST_ACTIVITY:
             return {
                 ...state,
-                activitiesCopy: [...state.activitiesCopy, payload],
+                activities: [...state.activities, payload],
             };
         case SORT_BY_NAME:
             return {
@@ -104,9 +102,14 @@ const reducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 countries: state.countriesCopy,
-                activities: state.activitiesCopy,
                 numPage: 1,
                 loading: false,
+            };
+        case DELETE_ACTIVITY:
+            return {
+                ...state,
+                activities: state.activities.filter(activity => activity.id !== payload),
+                numPage: 1,
             };
         default:
             return { ...state };

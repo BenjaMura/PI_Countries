@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_COUNTRIES, LOADING, GET_COUNTRY_BY_NAME, NEXT_PAGE, PREV_PAGE, NUMBER_PAGE, GET_COUNTRY_BY_ID, CLEAN_DETAIL, POST_ACTIVITY, RESET, GET_ACTIVITIES, SORT_BY_NAME, SORT_BY_POPULATION, FILTER_CONTINENT, FILTER_ACTIVITY } from "./actionsTypes";
+import { GET_COUNTRIES, LOADING, GET_COUNTRY_BY_NAME, NEXT_PAGE, PREV_PAGE, NUMBER_PAGE, GET_COUNTRY_BY_ID, CLEAN_DETAIL, POST_ACTIVITY, RESET, GET_ACTIVITIES, SORT_BY_NAME, SORT_BY_POPULATION, FILTER_CONTINENT, FILTER_ACTIVITY, DELETE_ACTIVITY } from "./actionsTypes";
 
 const endpointCountries = "http://localhost:3001/countries";
 const endpointActivities = "http://localhost:3001/activities"
@@ -49,7 +49,7 @@ export const postActivity = (form) => {
             if (!data) throw Error();
             return dispatch({ type: POST_ACTIVITY, payload: data });
         } catch (error) {
-            alert("Failed to create activity")
+            alert("The activity already exists")
         }
     };
 };
@@ -62,6 +62,18 @@ export const getActivities = () => {
             return dispatch({ type: GET_ACTIVITIES, payload: data})
         } catch (error) {
             alert("No activities available");           
+        }
+    };
+};
+
+export const deleteActivity = (id) => {
+    return async (dispatch) => {
+        try {
+            await axios.delete(`${endpointActivities}/${id}`);
+            // if (!data) throw Error();
+            return dispatch({ type: DELETE_ACTIVITY, payload: id})
+        } catch (error) {
+            alert("Couldn't delete the activity");       
         }
     };
 };

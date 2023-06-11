@@ -10,6 +10,7 @@ const postActivityHandler = async (req, res) => {
       season,
       countries
     );
+    if (!newActivity) throw new Error("Activity couldn't be created");
     res.status(201).json(newActivity);
   } catch (error) {
     res.status(400).json({ error: error.message });

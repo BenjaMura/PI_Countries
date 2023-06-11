@@ -1,4 +1,5 @@
 const { Country, Activity } = require("../db");
+const { Op } = require("sequelize");
 
 const postActivityController = async (
   name,
@@ -7,6 +8,10 @@ const postActivityController = async (
   season,
   countries
 ) => {
+  const find = await Activity.findAll({
+    where: { name: { [Op.iLike]: name } }});
+  
+  if (!find.length) {
   const postActivity = await Activity.create({
     name,
     difficulty,
@@ -24,6 +29,7 @@ const postActivityController = async (
   await postActivity.addCountries(countryIds);
 
   return postActivity;
+  }
 };
 
 module.exports = postActivityController;

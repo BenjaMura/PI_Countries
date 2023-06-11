@@ -9,11 +9,11 @@ import { getCountries, getActivities, sortByName, sortByPopulation, filterContin
 
 const Home = () => {
     const dispatch = useDispatch();
-    const { countries, loading, numPage, activities, countriesCopy, activitiesCopy } = useSelector((state) => state);
+    const { countries, loading, numPage, activities, countriesCopy } = useSelector((state) => state);
 
     useEffect(() => {
         if (!countriesCopy.length) dispatch(getCountries());
-        if (!activitiesCopy.length) dispatch(getActivities());
+        if (!activities.length) dispatch(getActivities());
     }, []);
 
     let first = (numPage - 1) * 10;
