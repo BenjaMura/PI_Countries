@@ -1,29 +1,33 @@
 import stylesActivities from "./Activities.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import Pagination from "../../components/Pagination/Pagination";
+import Loading from "../../components/Loading/Loading";
 import ActivitiesContainer from "../../components/ActivitiesContainer/ActivitiesContainer";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { getActivities, numberPage } from "../../redux/actions";
+import { getActivities, numberPage, resetting } from "../../redux/actions";
 
 const Activities = () => {
     const dispatch = useDispatch();
-    const { activities, numPage } = useSelector((state) => state);
+    const { activities, numPage, loading } = useSelector((state) => state);
     useEffect(() => {
+        dispatch(resetting());
         dispatch(getActivities());
-        dispatch(numberPage(1));
+        setTimeout(() => {
+            dispatch(numberPage(1));
+        }, 300);
     }, [dispatch])
 
-    let first = (numPage - 1) * 3;
-    let second = numPage * 3;
-    let pages = Math.ceil(activities.length / 3);
+    let first = (numPage - 1) * 5;
+    let second = numPage * 5;
+    let pages = Math.ceil(activities.length / 5);
     let currentActivities = activities.slice(first, second);
 
     return (
         <div className={stylesActivities.div}>
-            <Link to="/create" className={stylesActivities.link}>
-                <button className={stylesActivities.btn}>New Activity</button>
-            </Link>
+            {loading ? (
+                <Loading />
+            ) : (
+            <>
             <div className={stylesActivities.divPag}>
                 <Pagination pages={pages}/>
             </div>
@@ -31,6 +35,8 @@ const Activities = () => {
                 <ActivitiesContainer currentActivities={currentActivities}/>
             </div>
             {!activities.length && <div className={stylesActivities.divNoActivities}>There are no activities</div>}
+            </>
+            )}
         </div>
     );
 };

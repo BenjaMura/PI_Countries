@@ -1,0 +1,23 @@
+.div {
+    background-color: rgb(87, 196, 163);
+    border-radius: 1em;
+    display: inline-flex;
+    align-items: center;
+    gap: 5vw;
+    width: 90vw;
+    margin-bottom: 0.5em;
+}
+
+.divbtn {
+    margin-left: 1em;
+}
+
+.divbtn button:hover {
+    cursor: pointer;
+}
+
+.divAct {
+    display: flex;
+    gap: 5vw;
+    font-size: 3vh;
+}

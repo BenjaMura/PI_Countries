@@ -6,6 +6,7 @@ const ActivitiesContainer = ({currentActivities}) => {
     return (
         <div className={stylesActivitiesContainer.div}>
             <h2>ACTIVITIES</h2>
+            <div>
             {currentActivities?.map(activity => {
                 return (
                     <Activity
@@ -19,6 +20,7 @@ const ActivitiesContainer = ({currentActivities}) => {
                     />
                 );
             })}
+            </div>
         </div>
     );
 };

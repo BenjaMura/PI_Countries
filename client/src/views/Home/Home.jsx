@@ -44,7 +44,9 @@ const Home = () => {
 
     const handleReset = () => {
         dispatch(resetting());
-        dispatch(reset());
+        setTimeout(() => {
+            dispatch(reset());
+        }, 100);
         const selectElements = document.querySelectorAll("select");
         selectElements.forEach((select) => {
             select.value = "default";

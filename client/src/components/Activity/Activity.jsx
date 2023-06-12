@@ -13,13 +13,17 @@ const Activity = (activities) => {
 
     return (
         <div className={stylesActivity.div}>
-            <div className={stylesActivity.divAct}>
+            <div className={stylesActivity.divbtn}>
                 <button onClick={handleDelete}>❌</button>
-                <h3>Name: {activities.name}</h3>
-                <h4>Difficulty: {activities.difficulty}</h4>
-                <h4>Duration: {activities.duration}</h4>
-                <h4>Season: {activities.season}</h4>
-                <p>Countries: {activities.countries?.join(", ")}</p>
+            </div>
+            <div className={stylesActivity.divAct}>
+                <h3>{activities.name}</h3>
+                <h4>Difficulty: {activities.difficulty}/5</h4>
+                <h4>Duration: {activities.duration} hs</h4>
+                <h4>Season: {activities.season === "Spring" ? <> {activities.season} 🌸</> : null}
+                            {activities.season === "Winter" ? <> {activities.season} ❄️</> : null}
+                            {activities.season === "Autumn" ? <> {activities.season} 🍂</> : null}
+                            {activities.season === "Summer" ? <> {activities.season} ☀️</> : null}</h4>
             </div>
         </div>
     );

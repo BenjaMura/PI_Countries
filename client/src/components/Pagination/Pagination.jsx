@@ -25,6 +25,12 @@ const Pagination = ({pages}) => {
     const page = (number) => {
         dispatch(numberPage(number));
     };
+    const first = () => {
+        dispatch(numberPage(1));
+    };
+    const last = () => {
+        dispatch(numberPage(pages));
+    };
 
     const renderPageNumbers = () => {
         const pageNumbers = [];
@@ -53,6 +59,9 @@ const Pagination = ({pages}) => {
         <div className={stylesPagination.divPag}>
             {numPage > 1 && (
                 <div className={stylesPagination.divBtn}>
+                    <button className={stylesPagination.btnPN} onClick={first}>
+                        ⬅️⬅️ First
+                    </button>
                     <button className={stylesPagination.btnPN} onClick={prev}>
                         ⬅️ Prev
                     </button>
@@ -69,6 +78,9 @@ const Pagination = ({pages}) => {
                 <div className={stylesPagination.divBtn}>
                     <button className={stylesPagination.btnPN} onClick={next}>
                         Next ➡️
+                    </button>
+                    <button className={stylesPagination.btnPN} onClick={last}>
+                        Last ➡️➡️
                     </button>
                 </div>
             )}

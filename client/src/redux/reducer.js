@@ -47,7 +47,8 @@ const reducer = (state = initialState, { type, payload }) => {
         case NUMBER_PAGE:
             return {
                 ...state,
-                numPage: payload
+                numPage: payload,
+                loading: false,
             };
         case GET_COUNTRY_BY_ID:
             return {
