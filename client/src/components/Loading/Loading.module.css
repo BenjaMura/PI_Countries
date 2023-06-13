@@ -6,6 +6,7 @@
   min-height: 110vh;
   min-width: 100vw;
   margin-top: -3.5em;
+  position: relative;
 }
 
 .rot {

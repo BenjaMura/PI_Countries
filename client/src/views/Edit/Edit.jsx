@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries, postActivity } from "../../redux/actions";
+import { getCountries, editActivity, getActivities } from "../../redux/actions";
+import { useNavigate, useParams } from "react-router-dom";
 import validationForm from "../../helpers/Validations/ValidationForm";
 import Loading from "../../components/Loading/Loading";
-import stylesForm from "./Form.module.css";
+import stylesForm from "./Edit.module.css";
 
-const Form = () => {
-    
+const Edit = () => {
+    const { id } = useParams();
+    const { countriesCopy } = useSelector((state) => state);
     const [form, setForm] = useState({
         name: "",
         difficulty: "",
@@ -19,16 +21,19 @@ const Form = () => {
     const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch();
-    const { countriesCopy } = useSelector((state) => state);
+    const navigate = useNavigate();
     
     useEffect(() => {
-        setLoading(true)
+        setLoading(true);
         setTimeout(() => {
             setLoading(false)
         }, 300)
         if (!countriesCopy.length) dispatch(getCountries())
-    }, [])
-
+        return () => {
+            dispatch(getActivities());
+        };
+    }, [dispatch]);
+    
     const isFormEmpty = useMemo(() => {
         for (const key in form) {
           if (form[key] !== "" && form[key].length !== 0) {
@@ -37,7 +42,7 @@ const Form = () => {
         }
         return true;
     }, [form]);
-    
+
     const handleChange = (event) => {
         setForm({
             ...form,
@@ -48,7 +53,6 @@ const Form = () => {
             [event.target.name]: event.target.value,
         }));
     };
-
     const handleCountries = (event) => {
         const selectedCountry = event.target.value;
         const updatedCountries = event.target.checked
@@ -62,10 +66,11 @@ const Form = () => {
     };
 
     const handleSubmit = () => {
-        dispatch(postActivity(form));
-        alert("Your activity has been added");
+        dispatch(editActivity(form, id));
+        alert("Your activity has been modified");
+        navigate("/activities");
     };
-    
+
     return (
         <div className={stylesForm.div}>
             {loading ?
@@ -73,7 +78,7 @@ const Form = () => {
             (<div className={stylesForm.divForm}>
             <form onSubmit={handleSubmit} className={stylesForm.form}>
                 <div className={stylesForm.divAct}>
-                    <label htmlFor="name" className={stylesForm.labelAct}>New Activity</label>
+                    <label htmlFor="name" className={stylesForm.labelAct}>Activity</label>
                     <input type="text" name="name" className={stylesForm.inputAct} placeholder="Type activity's name or short description..." value={form.name} onChange={handleChange}/>
                     {errors.name && <span className={stylesForm.spans}>{errors.name}</span>}
                 </div>
@@ -108,7 +113,7 @@ const Form = () => {
                     </div>
                     {errors.countries && <span className={stylesForm.spans}>{errors.countries}</span>}
                 </div>
-                <button className={stylesForm.btnSubmit} type="submit" disabled={isFormEmpty || Object.keys(errors).length}>Add activity</button>
+                <button className={stylesForm.btnSubmit} type="submit" disabled={isFormEmpty || Object.keys(errors).length}>Modify activity</button>
             </form>
             </div>
             )}
@@ -116,4 +121,4 @@ const Form = () => {
     );
 };
 
-export default Form;
+export default Edit;

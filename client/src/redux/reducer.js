@@ -1,11 +1,10 @@
-import { GET_COUNTRIES, LOADING, GET_COUNTRY_BY_NAME, NEXT_PAGE, PREV_PAGE, NUMBER_PAGE, GET_COUNTRY_BY_ID, CLEAN_DETAIL, POST_ACTIVITY, RESET, GET_ACTIVITIES, SORT_BY_NAME, SORT_BY_POPULATION, FILTER_CONTINENT, FILTER_ACTIVITY, DELETE_ACTIVITY } from "./actionsTypes";
+import { GET_COUNTRIES, GET_COUNTRY_BY_NAME, NEXT_PAGE, PREV_PAGE, NUMBER_PAGE, GET_COUNTRY_BY_ID, CLEAN_DETAIL, POST_ACTIVITY, RESET, GET_ACTIVITIES, SORT_BY_NAME, SORT_BY_POPULATION, FILTER_CONTINENT, FILTER_ACTIVITY, DELETE_ACTIVITY, PUT_ACTIVITY_BY_ID, } from "./actionsTypes";
 
 const initialState = {
     countries: [],
     countriesCopy: [],
     countryDetail: {},
     activities: [],
-    loading: false,
     numPage: 1,
 };
 
@@ -16,17 +15,11 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 countries: payload,
                 countriesCopy: payload,
-                loading: false,
             };
         case GET_ACTIVITIES:
             return {
                 ...state,
                 activities: payload,
-            };
-        case LOADING:
-            return {
-                ...state,
-                loading: true,
             };
         case GET_COUNTRY_BY_NAME:
             return {
@@ -48,19 +41,19 @@ const reducer = (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 numPage: payload,
-                loading: false,
             };
         case GET_COUNTRY_BY_ID:
             return {
                 ...state,
                 countryDetail: payload,
-                loading: false,
             };
         case CLEAN_DETAIL:
             return {
                 ...state,
                 countryDetail: {},
             };
+        case PUT_ACTIVITY_BY_ID:
+            return { ...state };
         case POST_ACTIVITY:
             return {
                 ...state,
@@ -104,7 +97,6 @@ const reducer = (state = initialState, { type, payload }) => {
                 ...state,
                 countries: state.countriesCopy,
                 numPage: 1,
-                loading: false,
             };
         case DELETE_ACTIVITY:
             return {

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_COUNTRIES, LOADING, GET_COUNTRY_BY_NAME, NEXT_PAGE, PREV_PAGE, NUMBER_PAGE, GET_COUNTRY_BY_ID, CLEAN_DETAIL, POST_ACTIVITY, RESET, GET_ACTIVITIES, SORT_BY_NAME, SORT_BY_POPULATION, FILTER_CONTINENT, FILTER_ACTIVITY, DELETE_ACTIVITY } from "./actionsTypes";
+import { GET_COUNTRIES, GET_COUNTRY_BY_NAME, NEXT_PAGE, PREV_PAGE, NUMBER_PAGE, GET_COUNTRY_BY_ID, CLEAN_DETAIL, POST_ACTIVITY, RESET, GET_ACTIVITIES, SORT_BY_NAME, SORT_BY_POPULATION, FILTER_CONTINENT, FILTER_ACTIVITY, DELETE_ACTIVITY, PUT_ACTIVITY_BY_ID } from "./actionsTypes";
 
 const endpointCountries = "http://localhost:3001/countries";
 const endpointActivities = "http://localhost:3001/activities"
@@ -7,7 +7,6 @@ const endpointActivities = "http://localhost:3001/activities"
 export const getCountries = () => {
     return async (dispatch) => {
         try {
-            dispatch({ type: LOADING });
             const { data } = await axios.get(`${endpointCountries}`);
             if (!data.length) throw Error();
             return dispatch({ type: GET_COUNTRIES, payload: data})
@@ -32,7 +31,6 @@ export const getCountryByName = (name) => {
 export const getCountryById = (id) => {
     return async (dispatch) => {
         try {
-            dispatch({ type: LOADING });
             const { data } = await axios.get(`${endpointCountries}/${id}`);
             if (!data) throw Error();
             return dispatch({ type: GET_COUNTRY_BY_ID, payload: data})
@@ -69,11 +67,23 @@ export const getActivities = () => {
 export const deleteActivity = (id) => {
     return async (dispatch) => {
         try {
-            await axios.delete(`${endpointActivities}/${id}`);
-            // if (!data) throw Error();
+            const { data } = await axios.delete(`${endpointActivities}/${id}`);
+            if (!data) throw Error();
             return dispatch({ type: DELETE_ACTIVITY, payload: id})
         } catch (error) {
             alert("Couldn't delete the activity");       
+        }
+    };
+};
+
+export const editActivity = (form, id) => {
+    return async (dispatch) => {
+        try {
+            const { data } = await axios.put(`${endpointActivities}/edit/${id}`, form);
+            if (!data) throw Error();
+            return dispatch({ type: PUT_ACTIVITY_BY_ID, payload: data})
+        } catch (error) {
+            alert("Couldn't modify the activity");           
         }
     };
 };
@@ -129,11 +139,5 @@ export const numberPage = (number) => {
 export const reset = () => {
     return {
         type: RESET,
-    };
-};
-
-export const resetting = () => {
-    return {
-        type: LOADING,
     };
 };

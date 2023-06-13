@@ -2,12 +2,12 @@
 import stylesActivitiesContainer from "./ActivitiesContainer.module.css";
 import Activity from "../Activity/Activity";
 
-const ActivitiesContainer = ({currentActivities}) => {
+const ActivitiesContainer = ({activities}) => {
     return (
         <div className={stylesActivitiesContainer.div}>
             <h2>ACTIVITIES</h2>
             <div>
-            {currentActivities?.map(activity => {
+            {activities?.map(activity => {
                 return (
                     <Activity
                         key={activity.id} 
@@ -16,7 +16,7 @@ const ActivitiesContainer = ({currentActivities}) => {
                         difficulty={activity.difficulty}
                         duration={activity.duration}
                         season={activity.season}
-                        countries={activity.countries}
+                        Countries={activity.Countries}
                     />
                 );
             })}

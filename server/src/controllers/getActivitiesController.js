@@ -1,7 +1,11 @@
-const { Activity } = require("../db");
+const { Activity, Country } = require("../db");
 
 const getActivitiesController = async () => {
-    const getAllActivities = await Activity.findAll();
+    const getAllActivities = await Activity.findAll({where:{}, include: {
+            model: Country,
+            attributes: ["name", "flag"],
+            through: {attributes: []}
+        }});
     return getAllActivities;
 };
 

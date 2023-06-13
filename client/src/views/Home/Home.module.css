@@ -4,7 +4,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    min-height: 100vh;
+    min-height: 95vh;
     align-items: center;
     justify-content: center;
 }
@@ -17,7 +17,7 @@
 }
 
 .selFilters {
-    background-color: rgba(106, 199, 207, 0.821);
+    background-color: rgba(106, 199, 207, 0.941);
     text-align: center;
     height: 3.5vh;
     width: 15vw;

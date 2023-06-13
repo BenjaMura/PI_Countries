@@ -3,7 +3,7 @@
     background-size: 300px;
     background-repeat: repeat;
     background-attachment: fixed;
-    min-height: 100vh;
+    min-height: 95vh;
     align-items: center;
     justify-content: center;
 }
@@ -11,6 +11,25 @@
 .divPag {
     background-color:rgb(135, 186, 225);
     height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divNoActivities {
+    font-size: x-large;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divNoActivities h2 {
+    background-color: rgb(156, 160, 161);
+    color: #fff;
+    border-radius: 1em;
+    width: 40vw;
+    height: 10vh;
     display: flex;
     align-items: center;
     justify-content: center;

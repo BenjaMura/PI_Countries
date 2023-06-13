@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import stylesHome from "./Home.module.css";
 import CardsContainer from "../../components/CardsContainer/CardsContainer";
-import Loading from "../../components/Loading/Loading";
 import Pagination from "../../components/Pagination/Pagination";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountries, getActivities, sortByName, sortByPopulation, filterContinent, filterActivity, reset, resetting } from "../../redux/actions";
+import { getCountries, getActivities, sortByName, sortByPopulation, filterContinent, filterActivity, reset } from "../../redux/actions";
 
 const Home = () => {
     const dispatch = useDispatch();
-    const { countries, loading, numPage, activities, countriesCopy } = useSelector((state) => state);
+    const { countries, numPage, activities, countriesCopy } = useSelector((state) => state);
 
     useEffect(() => {
         if (!countriesCopy.length) dispatch(getCountries());
@@ -43,10 +42,7 @@ const Home = () => {
     };
 
     const handleReset = () => {
-        dispatch(resetting());
-        setTimeout(() => {
-            dispatch(reset());
-        }, 100);
+        dispatch(reset());
         const selectElements = document.querySelectorAll("select");
         selectElements.forEach((select) => {
             select.value = "default";
@@ -55,10 +51,6 @@ const Home = () => {
 
     return (
         <div className={stylesHome.divHome}>
-            {loading ? (
-                <Loading />
-            ) : (
-            <>
             <div className={stylesHome.divFilters}>
                 <select className={stylesHome.selFilters} onChange={handleSortByName} name="sortByName" defaultValue={"default"}>
                     <option value="default" disabled>Sort by Name...</option>
@@ -95,11 +87,6 @@ const Home = () => {
                 <CardsContainer currentCountries={currentCountries}/>
             </div>
             {!countries.length && <div className={stylesHome.divNotFound}>Countries Not Found <button className={stylesHome.btnResetNF} onClick={handleReset}>Reset</button></div>}
-            <div className={stylesHome.divPag}>
-                <Pagination pages={pages}/>
-            </div>
-            </>
-            )}
         </div>
     )
 };
