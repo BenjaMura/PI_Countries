@@ -35,7 +35,7 @@ const Detail = () => {
                     {countryDetail.Activities?.map((activity, index) => {
                         return (
                             <div key={index} className={stylesDetail.divAct}>
-                                <h3 className={stylesDetail.h3}>Activity: {activity.name}</h3>
+                                <h3 className={stylesDetail.h3}>{activity.name}</h3>
                                 <div className={stylesDetail.h4}>
                                     <h4>Difficulty: {activity.difficulty}/5</h4>
                                     {activity.duration && <h4>Duration: {activity.duration} hs</h4>}
