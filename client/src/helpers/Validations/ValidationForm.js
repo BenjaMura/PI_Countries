@@ -14,14 +14,14 @@ const validationForm = (form) => {
     if (!form.difficulty || form.difficulty > 5 || form.difficulty < 1) {
         errors.difficulty = "The difficulty must be a number between 1 and 5"
     }
-    if (/[^\d+$]/g.test(form.difficulty)) {
+    if (/[^\d]/g.test(form.difficulty)) {
         errors.difficulty = "The difficulty must be a number";
     }
     
     if (!form.duration) {
         errors.duration = "The duration of the activity is required";
     }
-    if (/[^\d+$]/g.test(form.duration)) {
+    if (/[^\d]/g.test(form.duration)) {
         errors.duration = "The duration must be a number";
     }
     
